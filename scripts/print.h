@@ -1,5 +1,5 @@
 #pragma once
-/* #include <glm/glm.hpp> */
+#include "glm/glm.hpp"
 #include <iostream>
 #define vprint(var) print(#var ":", var)
 
@@ -31,6 +31,6 @@ inline void print(auto first, auto... args) {
 
 
 // empty function to print newlines
-/* inline void print(glm::vec2 v) { */
-/*     std::cout << "V2(" << v.x << ", " << v.y << ")" << std::endl; */
-/* } */
+inline void print(glm::vec3 v) {
+    std::cout << "V3(" << v.x << ", " << v.y << "," << v.z << ")" << std::endl;
+}

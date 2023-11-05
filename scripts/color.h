@@ -1,19 +1,15 @@
 #pragma once
 #include <SDL.h>
-#include "algorithm"
+#include <algorithm>
 #include <iostream>
 
 struct Color {
-    int r;
-    int g;
-    int b;
-    int a;
+    Uint8 r;
+    Uint8 g;
+    Uint8 b;
+    Uint8 a;
 
     Color() : r(0), g(0), b(0), a(255) {}
-
-    void printColor() const {
-        std::cout << "Color (R: " <<  static_cast<unsigned int>(r) << ", G: " <<  static_cast<unsigned int>(g) << ", B: " <<  static_cast<unsigned int>(b) << ")" << std::endl;
-    }
 
     Color(int red, int green, int blue, int alpha = 255) {
         r = static_cast<Uint8>(std::min(std::max(red, 0), 255));
