@@ -16,6 +16,7 @@
 #include "cube.h"
 #include "light.h"
 #include "camera.h"
+#include "glm/ext/matrix_transform.hpp"
 
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
@@ -25,9 +26,9 @@ const float BIAS = 0.0001f;
 
 SDL_Renderer* renderer;
 std::vector<Object*> objects;
-Light light(glm::vec3(10.0, 10, 10), 1.5f, Color(255, 255, 255));
-Camera camera(glm::vec3(0.0, 0.0, 5.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 10.0f);
-Skybox skybox("../textures/morado.jpg");
+Light light(glm::vec3(-20.0, -20, 20), 1.5f, Color(255, 255, 255));
+Camera camera(glm::vec3(0.0, 0.0, 15.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 10.0f);
+Skybox skybox("../textures/minecraft.jpg");
 
 void point(glm::vec2 position, Color color) {
     SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
@@ -132,6 +133,15 @@ void setUp() {
             0.0f
     };
 
+    Material grayFourth = {
+            Color(125,125,125),   // diffuse
+            0.9,
+            0.1,
+            10.0f,
+            0.0f,
+            0.0f
+    };
+
     Material carbon = {
             Color(10,10,10),   // diffuse
             0.9,
@@ -149,6 +159,16 @@ void setUp() {
             0.0f,
             0.0f
     };
+
+    Material red = {
+            Color(255,0,0),   // diffuse
+            0.9,
+            0.1,
+            10.0f,
+            0.0f,
+            0.0f
+    };
+
 
     Material brown = {
             Color(108,94,83),   // diffuse
@@ -252,7 +272,6 @@ void setUp() {
     objects.push_back(new Cube(glm::vec3(-0.7f, 0.4f, 0.1f), glm::vec3(-0.4f, 0.7f, 0.401f), grayThird));
     objects.push_back(new Cube(glm::vec3(-0.4f, 0.4f, 0.1f), glm::vec3(0.4f, 0.7f, 0.401f), graySecond));
 
-
     //Eyes
     //----Left
     objects.push_back(new Cube(glm::vec3(-0.6f, 0.0f, 0.4f), glm::vec3(-0.3f, 0.3f, 0.41f), carbon));
@@ -277,7 +296,94 @@ void setUp() {
 
     //Ears
     objects.push_back(new Cube(glm::vec3(-1.0f, 1.0f, -0.5f), glm::vec3(-0.3f, 1.6f, -0.2f), rubber));
+    objects.push_back(new Cube(glm::vec3(-1.01f, 1.0f, -0.47f), glm::vec3(-0.299f, 1.601f, -0.23f), carbon));
+
     objects.push_back(new Cube(glm::vec3(0.3f, 1.0f, -0.5f), glm::vec3(1.0f, 1.6f, -0.2f), rubber));
+    objects.push_back(new Cube(glm::vec3(0.299f, 1.0f, -0.47f), glm::vec3(1.01f, 1.601f, -0.23f), carbon));
+
+    //Body-front
+    objects.push_back(new Cube(glm::vec3(-1.3f, -1.3f, -2.5f), glm::vec3(1.3f, 1.3f, -0.5f), rubber));
+    //--necklace
+    objects.push_back(new Cube(glm::vec3(-1.3f, -1.3f, -0.5f), glm::vec3(1.3f, 1.3f, -0.499f), red));
+    //--pixels
+    objects.push_back(new Cube(glm::vec3(-1.301f, 1.0f, -2.5f), glm::vec3(1.301f, 1.3f, -2.2f), graySecond));
+    objects.push_back(new Cube(glm::vec3(-1.301f, 0.7f, -2.5f), glm::vec3(1.301f, 1.0f, -2.2f), grayThird));
+    objects.push_back(new Cube(glm::vec3(-1.301f, 0.7f, -2.2f), glm::vec3(1.301f, 1.0f, -1.1f), graySecond));
+    objects.push_back(new Cube(glm::vec3(-1.301f, 0.4f, -2.5f), glm::vec3(1.301f, 0.7f, -2.2f), grayFourth));
+    objects.push_back(new Cube(glm::vec3(-1.301f, 0.4f, -2.2f), glm::vec3(1.301f, 0.7f, -1.9f), grayThird));
+    objects.push_back(new Cube(glm::vec3(-1.301f, 0.4f, -2.5f), glm::vec3(1.301f, 0.1f, -2.2f), grayThird));
+
+    objects.push_back(new Cube(glm::vec3(-1.302f, 1.3f, -0.8f), glm::vec3(1.302f, 1.0f, -0.5f), grayThird));
+    objects.push_back(new Cube(glm::vec3(-1.302f, 1.0f, -1.1f), glm::vec3(1.302f, 0.7f, -0.8f), grayFourth));
+    objects.push_back(new Cube(glm::vec3(-1.301f, 1.3f, -0.8f), glm::vec3(1.301f, -0.4f, -0.5f), graySecond));
+
+    objects.push_back(new Cube(glm::vec3(-1.301f, -1.0f, -2.2f), glm::vec3(1.301f, -0.7f, -0.9f), graySecond));
+    objects.push_back(new Cube(glm::vec3(-1.302f, -1.0f, -1.2f), glm::vec3(1.302f, -0.7f, -0.9f), grayFourth));
+    objects.push_back(new Cube(glm::vec3(-1.301f, -1.0f, -0.9f), glm::vec3(1.301f, -0.7f, -0.6f), grayThird));
+    objects.push_back(new Cube(glm::vec3(-1.301f, -0.7f, -1.2f), glm::vec3(1.301f, -0.4f, -0.9f), grayThird));
+    objects.push_back(new Cube(glm::vec3(-1.301f, -1.3f, -1.2f), glm::vec3(1.301f, -1.0f, -0.9f), grayThird));
+
+    objects.push_back(new Cube(glm::vec3(-1.301f, -1.3f, -2.5f), glm::vec3(1.301f, -0.7f, -2.2f), brownWhite));
+    objects.push_back(new Cube(glm::vec3(-1.301f, -1.3f, -2.2f), glm::vec3(1.301f, -1.0f, -1.9f), brownWhite));
+
+    //pixelsOnBody
+
+    //Body-back
+    objects.push_back(new Cube(glm::vec3(-1.0f, -1.3f, -5.5f), glm::vec3(1.0f, 0.85f, -2.5f), rubber));
+    objects.push_back(new Cube(glm::vec3(-1.001f, 0.5f, -5.5f), glm::vec3(1.001f, 0.85f, -5.3f), grayFourth));
+    objects.push_back(new Cube(glm::vec3(-1.001f, 0.5f, -5.3f), glm::vec3(1.001f, 0.85f, -4.0f), graySecond));
+    objects.push_back(new Cube(glm::vec3(-1.001f, 0.5f, -5.5f), glm::vec3(1.001f, -0.1f, -5.3f), graySecond));
+
+    objects.push_back(new Cube(glm::vec3(-1.001f, -1.3f, -2.5f), glm::vec3(1.001f, -1.0f, -5.0f), grayThird));
+    objects.push_back(new Cube(glm::vec3(-1.001f, -1.0f, -2.5f), glm::vec3(1.001f, -0.7f, -4.4f), grayThird));
+    objects.push_back(new Cube(glm::vec3(-1.001f, -1.0f, -2.5f), glm::vec3(1.001f, 0.5f, -2.8f), grayThird));
+    objects.push_back(new Cube(glm::vec3(-1.002f, -1.3f, -2.5f), glm::vec3(1.002f, -1.0f, -2.8f), grayFourth));
+
+    objects.push_back(new Cube(glm::vec3(-1.001f, 0.0f, -3.5f), glm::vec3(1.001f, 0.3f, -5.0f), graySecond));
+    objects.push_back(new Cube(glm::vec3(-1.001f, -0.3f, -2.8f), glm::vec3(1.001f, -0.6f, -4.0f), graySecond));
+
+
+    //Arms
+    //----Front-right
+    objects.push_back(new Cube(glm::vec3(0.15f, -1.3f, -0.95f), glm::vec3(0.85f, -3.5f, -1.65f), rubber));
+    objects.push_back(new Cube(glm::vec3(0.15f, -2.6f, -0.949f), glm::vec3(0.85f, -3.2f, -1.651f), brownThird));
+
+    //----Front-left
+    objects.push_back(new Cube(glm::vec3(-0.15f, -1.3f, -0.95f), glm::vec3(-0.85f, -3.5f, -1.65f), rubber));
+    objects.push_back(new Cube(glm::vec3(-0.15f, -2.6f, -0.949f), glm::vec3(-0.85f, -3.2f, -0.95f), brownThird));
+    objects.push_back(new Cube(glm::vec3(-0.149f, -2.9f, -1.30f), glm::vec3(-0.851f, -3.2f, -1.65f), brownThird));
+    objects.push_back(new Cube(glm::vec3(-0.149f, -2.9f, -0.95f), glm::vec3(-0.851f, -3.2f, -1.30f), brownWhite));
+    objects.push_back(new Cube(glm::vec3(-0.149f, -2.9f, -1.30f), glm::vec3(-0.851f, -3.2f, -1.65f), brownWhite));
+    objects.push_back(new Cube(glm::vec3(-0.149f, -2.6f, -1.30f), glm::vec3(-0.851f, -2.9f, -1.65f), brownWhite));
+    objects.push_back(new Cube(glm::vec3(-0.149f, -2.6f, -0.95f), glm::vec3(-0.851f, -2.9f, -1.30f), brownThird));
+
+    //objects.push_back(new Cube(glm::vec3(-0.151f, -2.6f, -0.95f), glm::vec3(-0.851f, -2.9f, -1.25f), brownWhite));
+
+    //----Back-right
+    objects.push_back(new Cube(glm::vec3(0.15f, -1.3f, -5.05f), glm::vec3(0.85f, -3.5f, -4.35f), rubber));
+    objects.push_back(new Cube(glm::vec3(0.15f, -2.6f, -5.051f), glm::vec3(0.85f, -2.9f, -4.349f), brownThird));
+    objects.push_back(new Cube(glm::vec3(0.15f, -2.9f, -5.051f), glm::vec3(0.50f, -3.2f, -4.349f), brownThird));
+
+    objects.push_back(new Cube(glm::vec3(0.149f, -2.9f, -5.05f), glm::vec3(0.851f, -3.2f, -4.70f), brownThird));
+    objects.push_back(new Cube(glm::vec3(0.149f, -2.9f, -4.70f), glm::vec3(0.851f, -3.2f, -4.35f), brownWhite));
+
+    objects.push_back(new Cube(glm::vec3(0.149f, -2.6f, -5.05f), glm::vec3(0.851f, -2.9f, -4.70f), brownWhite));
+    objects.push_back(new Cube(glm::vec3(0.149f, -2.6f, -4.70f), glm::vec3(0.851f, -2.9f, -4.35f), brownThird));
+
+    //----Back-left
+    objects.push_back(new Cube(glm::vec3(-0.15f, -1.3f, -5.05f), glm::vec3(-0.85f, -3.5f, -4.35f), rubber));
+    objects.push_back(new Cube(glm::vec3(-0.15f, -2.6f, -5.051f), glm::vec3(-0.85f, -2.9f, -4.349f), brownThird));
+    objects.push_back(new Cube(glm::vec3(-0.85f, -2.9f, -5.051f), glm::vec3(-0.50f, -3.2f, -4.349f), brownThird));
+
+    objects.push_back(new Cube(glm::vec3(-0.149f, -2.9f, -5.05f), glm::vec3(-0.851f, -3.2f, -4.70f), brownThird));
+    objects.push_back(new Cube(glm::vec3(-0.149f, -2.9f, -4.70f), glm::vec3(-0.851f, -3.2f, -4.35f), brownWhite));
+
+    objects.push_back(new Cube(glm::vec3(-0.149f, -2.6f, -5.05f), glm::vec3(-0.851f, -2.9f, -4.70f), brownWhite));
+    objects.push_back(new Cube(glm::vec3(-0.149f, -2.6f, -4.70f), glm::vec3(-0.851f, -2.9f, -4.35f), brownThird));
+
+    //tail
+    objects.push_back(new Cube(glm::vec3(-0.35f, 0.0f, -5.5f), glm::vec3(0.35f, 0.70f, -8.5f), rubber));
+
 
     //objects.push_back(new Cube(glm::vec3(1.0f, 1.0f, -3.0f), glm::vec3(1.5f, 1.5f, 1.5f), mirror));
     //objects.push_back(new Sphere(glm::vec3(-1.0f, 0.0f, -4.0f), 1.0f, ivory));
