@@ -17,6 +17,7 @@
 #include "light.h"
 #include "camera.h"
 #include "glm/ext/matrix_transform.hpp"
+#include "SDL_image.h"
 
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
@@ -26,7 +27,7 @@ const float BIAS = 0.0001f;
 
 SDL_Renderer* renderer;
 std::vector<Object*> objects;
-Light light(glm::vec3(-20.0, -20, 20), 1.5f, Color(255, 255, 255));
+Light light(glm::vec3(-20.0, -30, 30), 1.5f, Color(255, 255, 255));
 Camera camera(glm::vec3(0.0, 0.0, 15.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 10.0f);
 Skybox skybox("../textures/minecraft.jpg");
 
@@ -140,6 +141,15 @@ void setUp() {
             10.0f,
             0.0f,
             0.0f
+    };
+
+    Material diamond = {
+            Color(0,0,170),   // diffuse
+            0.5,
+            0.1,
+            10.0f,
+            0.7f,
+            0.4f
     };
 
     Material carbon = {
@@ -305,6 +315,7 @@ void setUp() {
     objects.push_back(new Cube(glm::vec3(-1.3f, -1.3f, -2.5f), glm::vec3(1.3f, 1.3f, -0.5f), rubber));
     //--necklace
     objects.push_back(new Cube(glm::vec3(-1.3f, -1.3f, -0.5f), glm::vec3(1.3f, 1.3f, -0.499f), red));
+    objects.push_back(new Cube(glm::vec3(-0.25f, -1.8f, -0.5f), glm::vec3(0.25f, -1.3f, -1.0f), diamond));
     //--pixels
     objects.push_back(new Cube(glm::vec3(-1.301f, 1.0f, -2.5f), glm::vec3(1.301f, 1.3f, -2.2f), graySecond));
     objects.push_back(new Cube(glm::vec3(-1.301f, 0.7f, -2.5f), glm::vec3(1.301f, 1.0f, -2.2f), grayThird));
@@ -454,6 +465,7 @@ int main(int argc, char* argv[]) {
         SDL_Quit();
         return 1;
     }
+
 
 
     bool running = true;
