@@ -2,10 +2,13 @@
 
 ![Proyecto Preview](preview.png)
 
+## Video de demostración 📽️
+[![Preview](previewVideo.png)](https://www.youtube.com/watch?v=3yK7TMUq8D0)
+
 ## Descripción📝
 Este proyecto consiste en el desarrollo de un diorama interactivo utilizando técnicas de raytracing. El diorama incluye efectos visuales como albedo, specular, transparencia y reflectividad para lograr una escena compleja y visualmente atractiva. 🔩
 
-## Criterios de Evaluación❓
+## Criterios de Evaluación ❓
 
 - **Complejidad de la Escena (30 puntos):** La puntuación se basará en la complejidad de la escena implementada.✅
 - **Atractivo Visual (20 puntos):** La puntuación se otorgará según la apariencia visual general de la escena.✅
