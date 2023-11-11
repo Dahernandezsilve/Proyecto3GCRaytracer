@@ -400,6 +400,7 @@ void setUp() {
     //objects.push_back(new Sphere(glm::vec3(-1.0f, 0.0f, -4.0f), 1.0f, ivory));
     //objects.push_back(new Cube(glm::vec3(-1.0f, -1.0f, -1.0f), glm::vec3(1.0f, 1.0f, 1.0f), mirror));
     //objects.push_back(new Cube(glm::vec3(0.0f, 1.0f, -3.0f), 1.0f, glass));
+
 }
 
 void render() {
@@ -408,7 +409,7 @@ void render() {
         for (int x = 0; x < SCREEN_WIDTH; x++) {
 
             float random_value = static_cast<float>(std::rand())/static_cast<float>(RAND_MAX);
-            if (random_value < 0.0) {
+            if (random_value < 0.0 ) {
                 continue;
             }
 
@@ -445,7 +446,7 @@ int main(int argc, char* argv[]) {
     }
 
     // Create a window
-    SDL_Window* window = SDL_CreateWindow("Raytracer - FPS: 0",
+    SDL_Window *window = SDL_CreateWindow("Raytracer - FPS: 0",
                                           SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                                           SCREEN_WIDTH, SCREEN_HEIGHT,
                                           SDL_WINDOW_SHOWN);
@@ -467,7 +468,6 @@ int main(int argc, char* argv[]) {
     }
 
 
-
     bool running = true;
     SDL_Event event;
 
@@ -476,6 +476,7 @@ int main(int argc, char* argv[]) {
     Uint32 currentTime = startTime;
 
     setUp();
+
 
     while (running) {
         while (SDL_PollEvent(&event)) {

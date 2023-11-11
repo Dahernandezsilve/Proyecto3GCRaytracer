@@ -11,7 +11,13 @@ public:
 
     Intersect rayIntersect(const glm::vec3& rayOrigin, const glm::vec3& rayDirection) const override;
 
+
+    // Método para establecer la textura del cubo
+    void setTexture(SDL_Texture* tex) {
+        texture = tex;
+    }
 private:
     glm::vec3 minCorner;
     glm::vec3 maxCorner;
+    SDL_Texture* texture;
 };
